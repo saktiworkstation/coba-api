@@ -34,7 +34,19 @@ class BukuController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Buku::find($id);
+        if($data){
+            return response()->json([
+                'status' => true,
+                'message' => 'Data ditemukan',
+                'data' => $data,
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
     }
 
     /**
