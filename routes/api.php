@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('buku', [BukuController::class, 'index']);
 Route::get('buku/{id}', [BukuController::class, 'show']);
+Route::post('buku', [BukuController::class, 'store']);

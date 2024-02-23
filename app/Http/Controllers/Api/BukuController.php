@@ -26,7 +26,17 @@ class BukuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataBuku = new Buku;
+        $dataBuku->judul = $request->judul;
+        $dataBuku->pengarang = $request->pengarang;
+        $dataBuku->tanggal_publikasi = $request->tanggal_publikasi;
+
+        $post = $dataBuku->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sukses memasukkan data.'
+        ]);
     }
 
     /**
