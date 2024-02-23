@@ -80,7 +80,38 @@ class BukuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dataBuku = Buku::find($id);
+        if (empty($dataBuku)){
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+
+        $rules = [
+            'judul' => 'required',
+            'pengarang' => 'required',
+            'tanggal_publikasi' => 'required|date'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Gagal melakukan update data',
+                'data' => $validator->errors()
+            ]);
+        }
+
+        $dataBuku->judul = $request->judul;
+        $dataBuku->pengarang = $request->pengarang;
+        $dataBuku->tanggal_publikasi = $request->tanggal_publikasi;
+
+        $post = $dataBuku->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sukses melakukan update data.'
+        ]);
     }
 
     /**
