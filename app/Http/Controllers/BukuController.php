@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class BukuController extends Controller
@@ -12,7 +13,10 @@ class BukuController extends Controller
      */
     public function index()
     {
-        //
+        $client = new Client();
+        $url = "http://coba-api.test/api/buku";
+        $response = $client->request('GET', $url);
+        echo $response->getBody()->getContents();
     }
 
     /**
