@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('buku', BukuController::class);
+Route::get('buku', [BukuController::class, 'index']);
+Route::post('buku', [BukuController::class, 'store']);
