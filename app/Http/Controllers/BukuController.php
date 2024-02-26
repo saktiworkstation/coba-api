@@ -16,7 +16,10 @@ class BukuController extends Controller
         $client = new Client();
         $url = "http://coba-api.test/api/buku";
         $response = $client->request('GET', $url);
-        echo $response->getBody()->getContents();
+        $content = $response->getBody()->getContents();
+        $contentArray = json_decode($content, true);
+        $data = $contentArray['data'];
+        return view('buku.index', ['data' => $data]);
     }
 
     /**
