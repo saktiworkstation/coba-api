@@ -93,9 +93,33 @@ class BukuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Buku $buku)
+    public function update(Request $request, string $id)
     {
-        //
+        $judul = $request->judul;
+        $pengarang = $request->pengarang;
+        $tanggal_publikasi = $request->tanggal_publikasi;
+
+        $parameter = [
+            'judul' => $judul,
+            'pengarang' => $pengarang,
+            'tanggal_publikasi' => $tanggal_publikasi
+        ];
+
+        $client = new Client();
+        $url = "http://coba-api.test/api/buku/$id";
+        $response = $client->request('PUT', $url, [
+            'headers' => ['Content-type' => 'application/json'],
+            'body' => json_encode($parameter)
+        ]);
+        $content = $response->getBody()->getContents();
+        $contentArray = json_decode($content, true);
+
+        if($contentArray['status'] != true){
+            $error = $contentArray['data'];
+            return redirect()->to('buku')->withErrors($error)->withInput();
+        }else{
+            return redirect()->to('buku')->with('success', 'Berhasil melakukan update data');
+        }
     }
 
     /**

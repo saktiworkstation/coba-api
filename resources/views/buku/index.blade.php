@@ -30,6 +30,9 @@
             @endif
             <form action='' method='post'>
                 @csrf
+                @if (Route::current()->uri == 'buku/{id}')
+                    @method('put')
+                @endif
                 <div class="mb-3 row">
                     <label for="judul" class="col-sm-2 col-form-label">Judul Buku</label>
                     <div class="col-sm-10">
