@@ -125,8 +125,19 @@ class BukuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Buku $buku)
+    public function destroy(string $id)
     {
-        //
+        $client = new Client();
+        $url = "http://coba-api.test/api/buku/$id";
+        $response = $client->request('DELETE', $url);
+        $content = $response->getBody()->getContents();
+        $contentArray = json_decode($content, true);
+
+        if($contentArray['status'] != true){
+            $error = $contentArray['data'];
+            return redirect()->to('buku')->withErrors($error)->withInput();
+        }else{
+            return redirect()->to('buku')->with('success', 'Berhasil melakukan delete data');
+        }
     }
 }
