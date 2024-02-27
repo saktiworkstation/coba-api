@@ -73,9 +73,21 @@ class BukuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Buku $buku)
+    public function edit(string $id)
     {
-        //
+        $client = new Client();
+        $url = "http://coba-api.test/api/buku/$id";
+        $response = $client->request('GET', $url);
+        $content = $response->getBody()->getContents();
+        $contentArray = json_decode($content, true);
+
+        if($contentArray['status'] != true){
+            $error = $contentArray['message'];
+            return redirect()->back()->withErrors($error);
+        }else{
+            $data = $contentArray['data'];
+            return view('buku.index', ['data' => $data]);
+        }
     }
 
     /**
