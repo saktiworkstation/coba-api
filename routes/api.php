@@ -25,4 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::put('buku/{id}', [BukuController::class, 'update']);
 // Route::delete('buku/{id}', [BukuController::class, 'destroy']);
 
-Route::resource('buku', BukuController::class);
+Route::resource('buku', BukuController::class)->middleware('checkHost');
